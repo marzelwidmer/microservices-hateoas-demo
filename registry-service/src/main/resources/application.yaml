@@ -1,0 +1,14 @@
+spring:
+  profiles:
+    active: default
+    include: common
+  application:
+    name: registry
+
+server:
+  port: 8761
+
+eureka:
+  client:
+    registerWithEureka: true
+    fetchRegistry: false
