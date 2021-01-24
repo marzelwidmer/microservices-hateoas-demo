@@ -1,6 +1,7 @@
 spring:
   cloud:
     gateway:
+
       routes:
         - id: customer
           uri: lb://customer

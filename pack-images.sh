@@ -1,11 +1,11 @@
 #!/bin/bash
 
 echo "Packing the Spring Cloud Gateway"
-gradle gateway-service:bootBuildImage --imageName=gateway:latest
+gradle clean gateway-service:bootBuildImage --imageName=gateway:latest -x test
 
 echo "Packing the Eureka Discovery Server"
-gradle registry-service:bootBuildImage --imageName=registry:latest
+gradle clean registry-service:bootBuildImage --imageName=registry:latest -x test
 
 echo "Packing the CustomerService"
-gradle customer-service:bootBuildImage --imageName=customer:latest
+gradle clean customer-service:bootBuildImage --imageName=customer:latest -x test
 

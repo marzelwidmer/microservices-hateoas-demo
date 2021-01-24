@@ -4,6 +4,21 @@ spring:
     include:
       - common
       - routes
+      - registry
 
   application:
     name:  gateway
+
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: false
+          lower-case-service-id: true
+          url-expression: "uri"
+      forwarded:
+        enabled: true
+
+server:
+  forward-headers-strategy: framework
+

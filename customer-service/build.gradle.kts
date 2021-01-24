@@ -19,6 +19,10 @@ repositories {
 
 extra["springCloudVersion"] = "2020.0.0"
 
+springBoot {
+	buildInfo()
+}
+
 dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-actuator")
 	implementation("org.springframework.boot:spring-boot-starter-hateoas")
@@ -27,6 +31,11 @@ dependencies {
 
 	implementation("org.springframework.boot:spring-boot-starter-data-jdbc")
 	runtimeOnly("com.h2database:h2")
+
+	//	This will also create index root api
+	implementation ("org.springframework.data:spring-data-rest-hal-browser:3.3.6.RELEASE")
+
+
 
 	implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
 	implementation("org.jetbrains.kotlin:kotlin-reflect")
