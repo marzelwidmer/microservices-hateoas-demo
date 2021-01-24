@@ -9,9 +9,11 @@ spring:
             - Path=/customer/**
           filters:
             - StripPrefix=1
+
         - id: registry
           uri: lb://registry
           predicates:
             - Path=/registry/**
           filters:
             - StripPrefix=1
+

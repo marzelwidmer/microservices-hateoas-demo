@@ -7,6 +7,3 @@ spring:
       - h2
   application:
     name:  customer
-
-server:
-  forward-headers-strategy: framework

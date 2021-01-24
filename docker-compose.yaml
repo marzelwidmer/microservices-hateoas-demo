@@ -4,6 +4,7 @@ networks:
   network-eureka:
 
 services:
+
   registry:
     image: registry:latest
     container_name: registry
@@ -14,19 +15,6 @@ services:
     networks:
       - network-eureka
 
-  customer:
-    image: customer:latest
-    container_name: customer
-    ports:
-      - "8081:8080"
-    depends_on:
-      - "registry"
-    environment:
-      - JAVA_OPTS=
-        -DEUREKA_SERVER=http://registry:8761/eureka
-    networks:
-      - network-eureka
-
   gateway:
     image: gateway:latest
     container_name: gateway
@@ -34,7 +22,20 @@ services:
       - "80:8080"
     depends_on:
       - registry
-      - customer
+    environment:
+      - JAVA_OPTS=
+        -DEUREKA_SERVER=http://registry:8761/eureka
+    networks:
+      - network-eureka
+
+  customer:
+    image: customer:latest
+    container_name: customer
+    ports:
+      - "8081:8080"
+    depends_on:
+      - "registry"
+      - "gateway"
     environment:
       - JAVA_OPTS=
         -DEUREKA_SERVER=http://registry:8761/eureka

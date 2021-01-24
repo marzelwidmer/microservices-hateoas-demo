@@ -15,8 +15,59 @@ Open Browser [http://localhost/registry](http://localhost/registry)
 http localhost/get --print=HhBb
 http localhost/customer --print=HhBb
 ```
+## POST customer 
+
+```bash
+echo '{
+  "firstName": "Foo",
+  "lastName": "Bar"
+}' | http -v post http://localhost/customer/customers
+```
+
+## Check H2 Database
+[http://localhost/customer/h2-console/](http://localhost/customer/h2-console/)
+This is allowed because of the following configuration.
+```yaml
+  h2:
+    console:
+      settings:
+        web-allow-others: true
+```
+## Call Customer API
+```bash
+http localhost/customer/customers --print=HhBb
+
+GET /customer/customers HTTP/1.1
+Accept: */*
+Accept-Encoding: gzip, deflate
+Connection: keep-alive
+Host: localhost
+User-Agent: HTTPie/2.3.0
 
 
+
+HTTP/1.1 200 OK
+Content-Type: application/hal+json
+Date: Sun, 24 Jan 2021 16:23:23 GMT
+transfer-encoding: chunked
+
+{
+    "_embedded": {
+        "customers": [
+            {
+                "firstName": "Foo",
+                "id": "b2f8f0ab-8fb1-4fa4-8214-964f82562065",
+                "lastName": "Bar"
+            }
+        ]
+    },
+    "_links": {
+        "self": {
+            "href": "http://localhost/customer/customers"
+        }
+    }
+}
+```
 
 
 
