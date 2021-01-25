@@ -10,6 +10,13 @@ spring:
           filters:
             - StripPrefix=1
 
+        - id: address
+          uri: lb://address
+          predicates:
+            - Path=/address/**
+          filters:
+            - StripPrefix=1
+
         - id: registry
           uri: lb://registry
           predicates:

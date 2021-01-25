@@ -42,3 +42,17 @@ services:
     networks:
       - network-eureka
 
+  address:
+    image: address:latest
+    container_name: address
+    ports:
+      - "8082:8080"
+    depends_on:
+      - "registry"
+      - "gateway"
+    environment:
+      - JAVA_OPTS=
+        -DEUREKA_SERVER=http://registry:8761/eureka
+    networks:
+      - network-eureka
+

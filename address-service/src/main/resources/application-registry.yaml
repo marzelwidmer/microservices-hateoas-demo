@@ -1,0 +1,12 @@
+eureka:
+  instance:
+    hostname: address
+    lease-renewal-interval-in-seconds: 2
+
+  client:
+    enabled: true
+    registerWithEureka: true
+    fetchRegistry: true
+    serviceUrl:
+      registerWithEureka: true
+      defaultZone: ${EUREKA_SERVER:http://localhost:8761/eureka}

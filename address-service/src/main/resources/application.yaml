@@ -1,0 +1,9 @@
+spring:
+  profiles:
+    active: default
+    include:
+      - common
+      - registry
+      - h2
+  application:
+    name:  address

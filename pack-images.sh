@@ -2,6 +2,9 @@
 echo "Packing the CustomerService"
 gradle clean customer-service:bootBuildImage --imageName=customer:latest -x test
 
+echo "Packing the AddressService"
+gradle clean address-service:bootBuildImage --imageName=address:latest -x test
+
 echo "Packing the Spring Cloud Gateway"
 gradle clean gateway-service:bootBuildImage --imageName=gateway:latest -x test
 

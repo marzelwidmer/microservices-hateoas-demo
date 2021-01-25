@@ -2,6 +2,9 @@
 echo "Build the CustomerService"
 gradle customer-service:build
 
+echo "Build the AddressService"
+gradle address-service:build
+
 echo "Build the Spring Cloud Gateway"
 gradle gateway-service:build
 

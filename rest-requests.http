@@ -1,0 +1,18 @@
+###
+POST http://localhost/customer/customers
+Content-Type: application/json
+
+{
+  "firstName": "Foo",
+  "lastName": "Bar"
+}
+
+
+###
+POST http://localhost/address/addresses
+Content-Type: application/json
+
+{
+  "streetName": "Fifth Avenue",
+  "streetNr": "103"
+}
