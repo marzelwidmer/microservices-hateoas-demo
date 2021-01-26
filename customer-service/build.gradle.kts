@@ -35,6 +35,13 @@ dependencies {
 	//	This will also create index root api
 	implementation ("org.springframework.data:spring-data-rest-hal-browser:3.3.6.RELEASE")
 
+	//	Used for WebClient
+	implementation("org.springframework.boot:spring-boot-starter-webflux")
+
+	// Client-Side Load-Balancing
+//	implementation ("org.springframework.cloud:spring-cloud-starter-loadbalancer")
+//	implementation ("org.springframework.cloud:spring-cloud-starter-openfeign")
+
 
 
 	implementation("com.fasterxml.jackson.module:jackson-module-kotlin")

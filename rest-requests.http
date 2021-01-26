@@ -16,3 +16,15 @@ Content-Type: application/json
   "streetName": "Fifth Avenue",
   "streetNr": "103"
 }
+
+
+
+
+###
+POST http://localhost:8081/addresses
+Content-Type: application/json
+
+{
+  "streetName": "Fifth Avenue",
+  "streetNr": "103"
+}

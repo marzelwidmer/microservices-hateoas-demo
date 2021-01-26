@@ -7,3 +7,26 @@ spring:
       - h2
   application:
     name:  customer
+
+logging:
+  level:
+    #    root: warn
+    ch.keepcalm.demo: debug
+  pattern:
+    console: "%clr(%d{yyyy-MM-dd E HH:mm:ss.SSS}){blue} - %clr(${spring.application.name:-}){green} - %clr(%-40.40logger{0}){magenta} - %clr(%m){green}%n"
+
+server:
+  port: 8080
+
+---
+spring:
+  config:
+    activate:
+      on-profile: standalone
+  cloud:
+    discovery:
+      enabled: false
+
+eureka:
+  client:
+    enabled: false

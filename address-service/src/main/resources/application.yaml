@@ -7,3 +7,18 @@ spring:
       - h2
   application:
     name:  address
+
+server:
+  port: 8081
+
+---
+spring:
+  config:
+    activate:
+      on-profile: standalone
+  cloud:
+    discovery:
+      enabled: false
+
+server:
+  port: 8081
