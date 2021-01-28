@@ -3,7 +3,6 @@ spring:
     active: default
     include:
       - common
-      - registry
       - h2
   application:
     name:  customer
@@ -17,16 +16,3 @@ logging:
 
 server:
   port: 8080
-
----
-spring:
-  config:
-    activate:
-      on-profile: standalone
-  cloud:
-    discovery:
-      enabled: false
-
-eureka:
-  client:
-    enabled: false

@@ -1,26 +1,17 @@
 package ch.keepcalm.demo
 
-import com.netflix.discovery.EurekaClient
-import org.springframework.beans.factory.annotation.Value
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
 import org.springframework.cloud.client.loadbalancer.LoadBalanced
 import org.springframework.cloud.client.loadbalancer.RestTemplateCustomizer
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
-import org.springframework.hateoas.EntityModel
-import org.springframework.hateoas.MediaTypes
-import org.springframework.hateoas.client.Traverson
 import org.springframework.hateoas.config.HypermediaRestTemplateConfigurer
-import org.springframework.hateoas.server.core.TypeReferences
-import org.springframework.http.HttpMethod
-import org.springframework.http.ResponseEntity
-import org.springframework.stereotype.Service
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.http.*
+import org.springframework.web.client.RestClientException
 import org.springframework.web.client.RestTemplate
-import java.net.URI
-
+import java.io.IOException
+import java.lang.Exception
 
 @SpringBootApplication
 class CustomerApplication
@@ -46,6 +37,7 @@ class MyConfiguration {
         return RestTemplateCustomizer { restTemplate: RestTemplate? -> restTemplate?.let { configurer.registerHypermediaTypes(it) } }
     }
 }
+
 //
 //@Service
 //class FooService(private val discoveryClient: EurekaClient, private val restTemplate: RestTemplate) {
