@@ -9,7 +9,12 @@ docker-compose up
 for i in {1..100}; do; http http://localhost/customer forwarded:for='docker.me;host=docker.me' ; done
 ```
 
+```bash
+http http://localhost/customer forwarded:for='docker.me;host=docker.me' --print=HhBb
 
+http http://localhost/customer/addresses forwarded:for='docker.me;host=docker.me' --print=HhBb
+
+```
 
 
 

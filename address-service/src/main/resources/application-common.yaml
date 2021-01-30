@@ -17,3 +17,7 @@ management:
 server:
   forward-headers-strategy: framework
 
+# Used for Traverson Ribbon Client
+ribbon:
+  restclient:
+    enabled: true

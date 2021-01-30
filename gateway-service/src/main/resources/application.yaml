@@ -3,20 +3,10 @@ spring:
     active: default
     include:
       - common
-      - routes
+      - gateway
 
   application:
     name:  gateway-service
-
-  cloud:
-    gateway:
-      discovery:
-        locator:
-          enabled: false
-          lower-case-service-id: true
-          url-expression: "uri"
-      forwarded:
-        enabled: true
 
 server:
   port: 8080

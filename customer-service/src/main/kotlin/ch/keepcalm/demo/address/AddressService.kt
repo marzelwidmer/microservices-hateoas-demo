@@ -29,26 +29,20 @@ class AddressService(private val restTemplate: RestTemplate) {
 
     fun addresses(): ResponseEntity<EntityModel<String>> {
         val addressesLink = traverseToInternalApiAuftragService().follow("addresses").asLink()
-        return restTemplate.exchange(
-            addressesLink.expand().href,
-            HttpMethod.GET,
-            null,
-            TypeReferences.EntityModelType<String>()
+        return restTemplate.exchange(addressesLink.expand().href, HttpMethod.GET, null, TypeReferences.EntityModelType<String>()
         )
     }
 
     internal fun traverseToInternalApiAuftragService(): Traverson {
-        return Traverson(
-            URI.create("http://address-service"),
-            MediaTypes.HAL_JSON
-        ).setRestOperations(restTemplate)
+        return Traverson(URI.create("http://address-service"), MediaTypes.HAL_JSON).setRestOperations(restTemplate)
     }
+
 
     fun foo(): ResponseEntity<String> {
         val headers = HttpHeaders()
         headers["Accept"] = MediaType.APPLICATION_JSON_VALUE
 
-        val baseUrl = "http://address-service/"
+        val baseUrl = "http://address-service"
         return restTemplate.exchange(baseUrl, HttpMethod.GET,  HttpEntity<Any>(headers), String::class.java)
     }
 }

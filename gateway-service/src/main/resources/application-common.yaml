@@ -14,5 +14,10 @@ management:
     git:
       mode: full
 
-server:
-  forward-headers-strategy: framework
+#server:
+#  forward-headers-strategy: framework
+
+# Used for Traverson Ribbon Client
+ribbon:
+  restclient:
+    enabled: true
