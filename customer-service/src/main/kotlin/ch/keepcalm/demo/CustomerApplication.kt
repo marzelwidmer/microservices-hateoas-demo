@@ -7,11 +7,17 @@ import org.springframework.cloud.client.loadbalancer.RestTemplateCustomizer
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.hateoas.config.HypermediaRestTemplateConfigurer
+import org.springframework.hateoas.config.HypermediaWebClientConfigurer
 import org.springframework.http.*
 import org.springframework.web.client.RestClientException
 import org.springframework.web.client.RestTemplate
+import org.springframework.web.reactive.function.client.WebClient
 import java.io.IOException
 import java.lang.Exception
+import org.springframework.web.server.adapter.ForwardedHeaderTransformer
+
+
+
 
 @SpringBootApplication
 class CustomerApplication
@@ -27,11 +33,15 @@ class MyConfiguration {
     @Bean
     fun restTemplate() = RestTemplate()
 
-//    @Bean
-//    fun webClientBuilder(configurer: HypermediaWebClientConfigurer): WebClient.Builder? {
-//        return configurer.registerHypermediaTypes(WebClient.builder())
-//    }
-//
+    @Bean
+    fun forwardedHeaderTransformer(): ForwardedHeaderTransformer? {
+        return ForwardedHeaderTransformer()
+    }
+    @Bean
+    fun webClientBuilder(configurer: HypermediaWebClientConfigurer): WebClient.Builder? {
+        return configurer.registerHypermediaTypes(WebClient.builder())
+    }
+
     @Bean
     fun restTemplateCustomizer(configurer: HypermediaRestTemplateConfigurer): RestTemplateCustomizer? {
         return RestTemplateCustomizer { restTemplate: RestTemplate? -> restTemplate?.let { configurer.registerHypermediaTypes(it) } }
