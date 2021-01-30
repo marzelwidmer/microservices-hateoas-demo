@@ -3,24 +3,18 @@ spring:
     gateway:
 
       routes:
-        - id: customer
-          uri: lb://customer
+        - id: customer-service
+          uri: lb://customer-service
           predicates:
             - Path=/customer/**
           filters:
             - StripPrefix=1
 
-        - id: address
-          uri: lb://address
+        - id: address-service
+          uri: lb://address-service
           predicates:
             - Path=/address/**
           filters:
             - StripPrefix=1
 
-        - id: registry
-          uri: lb://registry
-          predicates:
-            - Path=/registry/**
-          filters:
-            - StripPrefix=1
 

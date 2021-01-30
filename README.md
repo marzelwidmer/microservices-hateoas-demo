@@ -1,3 +1,23 @@
+# Docker Compose
+```bash
+./build.sh
+docker-compose build
+docker-compose up
+```
+
+```bash
+for i in {1..100}; do; http http://localhost/customer forwarded:for='docker.me;host=docker.me' ; done
+```
+
+
+
+
+
+
+
+
+
+
 # Build
 ```bash
 ./pack-images.sh

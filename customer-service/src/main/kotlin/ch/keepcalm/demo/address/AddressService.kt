@@ -39,7 +39,7 @@ class AddressService(private val restTemplate: RestTemplate) {
 
     internal fun traverseToInternalApiAuftragService(): Traverson {
         return Traverson(
-            URI.create("http://address-service:8081"),
+            URI.create("http://address-service"),
             MediaTypes.HAL_JSON
         ).setRestOperations(restTemplate)
     }
@@ -48,7 +48,7 @@ class AddressService(private val restTemplate: RestTemplate) {
         val headers = HttpHeaders()
         headers["Accept"] = MediaType.APPLICATION_JSON_VALUE
 
-        val baseUrl = "http://address-service:8081/"
+        val baseUrl = "http://address-service/"
         return restTemplate.exchange(baseUrl, HttpMethod.GET,  HttpEntity<Any>(headers), String::class.java)
     }
 }

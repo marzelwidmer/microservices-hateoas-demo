@@ -5,7 +5,7 @@ spring:
       - common
       - h2
   application:
-    name:  customer
+    name:  customer-service
 
 logging:
   level:
@@ -15,4 +15,23 @@ logging:
     console: "%clr(%d{yyyy-MM-dd E HH:mm:ss.SSS}){blue} - %clr(${spring.application.name:-}){green} - %clr(%-40.40logger{0}){magenta} - %clr(%m){green}%n"
 
 server:
-  port: 8080
+  port: 9000
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka/
+    initialInstanceInfoReplicationIntervalSeconds: 5
+    registryFetchIntervalSeconds: 5
+  instance:
+    leaseRenewalIntervalInSeconds: 5
+    leaseExpirationDurationInSeconds: 5
+---
+server.port: 80
+
+eureka.client.serviceUrl.defaultZone: http://eureka-server:8761/eureka/
+
+spring:
+  config:
+    activate:
+      on-profile: docker

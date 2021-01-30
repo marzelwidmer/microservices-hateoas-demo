@@ -3,7 +3,7 @@ spring:
     active: default
     include: common
   application:
-    name: registry
+    name: eureka-service
 
 server:
   port: 8761
