@@ -32,8 +32,10 @@ dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-data-jdbc")
 	runtimeOnly("com.h2database:h2")
 
-	//	This will also create index root api
+	//	This will also create index root api - http://docker/myapp/services/customer/browser/index.html#http://docker/myapp/services/customer/
 	implementation ("org.springframework.data:spring-data-rest-hal-browser:3.3.6.RELEASE")
+	// HAL Explorer http://docker/myapp/services/customer/explorer/index.html#uri=http://docker/myapp/services/customer/ -->
+	implementation ("org.springframework.data:spring-data-rest-hal-explorer")
 
 	//	Used for WebClient
 	implementation("org.springframework.boot:spring-boot-starter-webflux")

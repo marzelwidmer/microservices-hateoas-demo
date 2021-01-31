@@ -1,11 +1,28 @@
 ### Over GATEWAY
+### Custmer
 POST http://docker/myapp/services/customer/customers
+Forwarded: for="docker;host=docker"
 Content-Type: application/json
 
 {
   "firstName": "Foo",
   "lastName": "Bar"
 }
+### Address
+POST http://docker/myapp/services/address/addresses
+Forwarded: for="docker;host=docker"
+Content-Type: application/json
+
+{
+  "streetName": "Fifth Avenue",
+  "streetNr": "103"
+}
+
+
+### Address over Customer
+GET http://docker/myapp/services/customer/addresses
+Forwarded: for="docker;host=docker"
+
 
 
 

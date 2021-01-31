@@ -84,6 +84,20 @@ transfer-encoding: chunked
 ```
 
 
+
+# Hal-Browser from Customer
+- [/customer/explorer/index.html#uri=http://docker/myapp/services/customer/
+](http://docker/myapp/services/customer/explorer/index.html#uri=http://docker/myapp/services/customer/)
+- [/customer/browser/index.html#http://docker/myapp/services/customer/](http://docker/myapp/services/customer/browser/index.html#http://docker/myapp/services/customer/)
+
+
+
+
+
+
+
+
+
 ## Standalone Setup
 ```bash
 http http://localhost:8080/myapp/services/customer/customers forwarded:for='docker;host=docker' --print=HhBb
