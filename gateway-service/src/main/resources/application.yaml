@@ -1,6 +1,7 @@
 spring:
   application:
     name:  gateway-service
+
   cloud:
     gateway:
       discovery:
@@ -32,6 +33,13 @@ spring:
             - StripPrefix=3
           uri: http://localhost:9000
 
+logging:
+  level:
+    root: debug
+
+server:
+  port: 8080
+
 management:
   endpoints:
     web:
@@ -47,27 +55,6 @@ management:
   info:
     git:
       mode: full
-
-logging:
-  level:
-    root: debug
-
-
-
-
-
-#spring:
-#  profiles:
-#    active: default
-#    include:
-#      - common
-#      - gateway
-#
-#  application:
-#    name:  gateway-service
-#
-server:
-  port: 8080
 
 eureka:
   client:
