@@ -1,14 +1,14 @@
 package ch.keepcalm.demo.address
 
+import org.springframework.beans.factory.annotation.Value
 import org.springframework.hateoas.EntityModel
 import org.springframework.hateoas.Link
 import org.springframework.hateoas.MediaTypes
 import org.springframework.hateoas.client.Traverson
 import org.springframework.hateoas.server.core.TypeReferences
-import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder
-import org.springframework.http.HttpHeaders
+import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo
+import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn
 import org.springframework.http.HttpMethod
-import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.stereotype.Service
 import org.springframework.web.bind.annotation.RequestMapping
@@ -21,18 +21,26 @@ class AddressController(private val addressService: AddressService) {
 
     @RequestMapping("/addresses")
     fun addresses(): ResponseEntity<EntityModel<String>> {
+        val headerLocationURI: URI = linkTo(methodOn(AddressController::class.java).addresses()).toUri()
+        val selfLink: Link = linkTo(methodOn(AddressController::class.java).addresses()).withSelfRel()
+        val result = addressService.addresses().also {
+            it.body?.removeLinks()
+            it.body?.add(selfLink)
+        }
+        return ResponseEntity.ok()
+            .headers {
+                it.location = linkTo(methodOn(AddressController::class.java).addresses()).toUri()
+            }
+            .body(result.body);
 
-        val headers = HttpHeaders()
-        val selfLink: Link = WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(AddressController::class.java).addresses()).withSelfRel()
-        println(selfLink.href)
-        headers.location = WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(AddressController::class.java).addresses()).toUri()
-        println(ResponseEntity<EntityModel<String>>(headers, HttpStatus.OK))
-        return addressService.addresses()
     }
 }
 
 @Service
 class AddressService(private val restTemplate: RestTemplate) {
+
+    @Value("\${api.address:http://localhost:9001}")
+    private val apiAddress: String? = null
 
     fun addresses(): ResponseEntity<EntityModel<String>> {
         val addressesLink = traverseToInternalApiAuftragService().follow("addresses").asLink()
@@ -42,6 +50,6 @@ class AddressService(private val restTemplate: RestTemplate) {
     }
 
     internal fun traverseToInternalApiAuftragService(): Traverson {
-        return Traverson(URI.create("http://address-service"), MediaTypes.HAL_JSON).setRestOperations(restTemplate)
+        return Traverson(URI.create(apiAddress), MediaTypes.HAL_JSON).setRestOperations(restTemplate)
     }
 }

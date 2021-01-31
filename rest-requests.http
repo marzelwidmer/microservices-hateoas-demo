@@ -1,4 +1,4 @@
-###
+### Over GATEWAY
 POST http://docker/myapp/services/customer/customers
 Content-Type: application/json
 
@@ -8,20 +8,26 @@ Content-Type: application/json
 }
 
 
-###
-POST http://localhost/address/addresses
+
+
+
+### Directly
+GET http://localhost:8080/myapp/services/customer/addresses
+Forwarded: for="docker;host=docker"
+
+
+### Custmer
+POST http://localhost:9000/customers
 Content-Type: application/json
 
 {
-  "streetName": "Fifth Avenue",
-  "streetNr": "103"
+  "firstName": "Foo",
+  "lastName": "Bar"
 }
 
 
-
-
-###
-POST http://localhost:8081/addresses
+### Address
+POST http://localhost:9001/addresses
 Content-Type: application/json
 
 {

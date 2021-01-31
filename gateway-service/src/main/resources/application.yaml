@@ -33,6 +33,13 @@ spring:
             - StripPrefix=3
           uri: http://localhost:9000
 
+        - id: address-service
+          predicates:
+            - Path=/myapp/services/address/**
+          filters:
+            - StripPrefix=3
+          uri: http://localhost:9001
+
 logging:
   level:
     root: debug
@@ -84,3 +91,10 @@ spring:
           filters:
             - StripPrefix=3
           uri: lb://customer-service
+
+        - id: address-service
+          predicates:
+            - Path=/myapp/services/address/**
+          filters:
+            - StripPrefix=3
+          uri: lb://address-service
