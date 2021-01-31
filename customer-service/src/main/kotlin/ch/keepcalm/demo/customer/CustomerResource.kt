@@ -14,13 +14,9 @@ class CustomerResource(private val service: CustomerService) {
 
     @GetMapping(value = ["/customers/{id}"])
     fun one(@PathVariable id: String): EntityModel<Customer> {
-        val selfLink: Link = linkTo(
-            methodOn(CustomerResource::class.java).one(id)
-        ).withSelfRel()
-        val create: Affordance = afford<CustomerResource> {
-            methodOn(CustomerResource::class.java).add(customer = Customer(firstName = "", lastName = ""))
-        }
-        val aggregateRoot : Link = linkTo(methodOn(CustomerResource::class.java).all()).withRel("customers")
+        val selfLink: Link = linkTo(methodOn(CustomerResource::class.java).one(id)).withSelfRel()
+        val create: Affordance = afford<CustomerResource> { methodOn(CustomerResource::class.java).add(customer = Customer(firstName = "", lastName = "")) }
+        val aggregateRoot: Link = linkTo(methodOn(CustomerResource::class.java).all()).withRel("customers")
             .andAffordance(WebMvcLinkBuilder.afford(methodOn(CustomerResource::class.java).add(customer = Customer(firstName = "", lastName = ""))))
 
         return EntityModel.of(service.findCustomerById(id) as Customer, selfLink.andAffordance(create), aggregateRoot)
@@ -29,9 +25,7 @@ class CustomerResource(private val service: CustomerService) {
 
     @GetMapping(value = ["/customers"])
     fun all(): CollectionModel<Customer> {
-        val selfLink: Link = linkTo(
-            methodOn(CustomerResource::class.java).all()
-        ).withSelfRel()
+        val selfLink: Link = linkTo(methodOn(CustomerResource::class.java).all()).withSelfRel()
         return CollectionModel.of(service.findCustomers(), selfLink)
     }
 
@@ -39,6 +33,6 @@ class CustomerResource(private val service: CustomerService) {
     @PostMapping(value = ["/customers"])
     fun add(@RequestBody customer: Customer): HttpEntity<*> {
         service.post(customer)
-        return  ResponseEntity.EMPTY
+        return ResponseEntity.EMPTY
     }
 }

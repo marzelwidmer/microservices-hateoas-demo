@@ -17,8 +17,6 @@ import java.lang.Exception
 import org.springframework.web.server.adapter.ForwardedHeaderTransformer
 
 
-
-
 @SpringBootApplication
 class CustomerApplication
 
@@ -35,8 +33,11 @@ class MyConfiguration {
 
     @Bean
     fun forwardedHeaderTransformer(): ForwardedHeaderTransformer? {
-        return ForwardedHeaderTransformer()
+        return ForwardedHeaderTransformer().apply {
+            isRemoveOnly = true
+        }
     }
+
     @Bean
     fun webClientBuilder(configurer: HypermediaWebClientConfigurer): WebClient.Builder? {
         return configurer.registerHypermediaTypes(WebClient.builder())

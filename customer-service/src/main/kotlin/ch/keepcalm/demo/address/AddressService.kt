@@ -1,26 +1,36 @@
 package ch.keepcalm.demo.address
 
+import ch.keepcalm.demo.customer.CustomerResource
 import org.springframework.hateoas.EntityModel
+import org.springframework.hateoas.Link
 import org.springframework.hateoas.MediaTypes
 import org.springframework.hateoas.client.Traverson
 import org.springframework.hateoas.server.core.TypeReferences
+import org.springframework.hateoas.server.core.WebHandler.linkTo
+import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder
 import org.springframework.http.*
 import org.springframework.stereotype.Service
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 import org.springframework.web.client.RestTemplate
 import java.net.URI
+import org.springframework.http.ResponseEntity
+
+
+
 
 @RestController
 class AddressController(private val addressService: AddressService) {
 
     @RequestMapping("/addresses")
     fun addresses(): ResponseEntity<EntityModel<String>> {
+
+        val headers = HttpHeaders()
+        val selfLink: Link = WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(AddressController::class.java).addresses()).withSelfRel()
+        println(selfLink.href)
+        headers.location = WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(AddressController::class.java).addresses()).toUri()
+        println(ResponseEntity<EntityModel<String>>(headers, HttpStatus.OK))
         return addressService.addresses()
-    }
-    @RequestMapping("/foo")
-    fun foo(): ResponseEntity<String> {
-        return addressService.foo()
     }
 }
 
@@ -29,26 +39,24 @@ class AddressService(private val restTemplate: RestTemplate) {
 
     fun addresses(): ResponseEntity<EntityModel<String>> {
         val addressesLink = traverseToInternalApiAuftragService().follow("addresses").asLink()
-        return restTemplate.exchange(addressesLink.expand().href, HttpMethod.GET, null, TypeReferences.EntityModelType<String>()
+        return restTemplate.exchange(
+            addressesLink.expand().href, HttpMethod.GET, null, TypeReferences.EntityModelType<String>()
         )
     }
 
     internal fun traverseToInternalApiAuftragService(): Traverson {
-        return Traverson(URI.create("http://address-service"), MediaTypes.HAL_JSON).setRestOperations(restTemplate)
+        return Traverson(URI.create("http://localhost:9001"), MediaTypes.HAL_JSON).setRestOperations(restTemplate)
     }
 
 
-    fun foo(): ResponseEntity<String> {
-        val headers = HttpHeaders()
-        headers["Accept"] = MediaType.APPLICATION_JSON_VALUE
-
-        val baseUrl = "http://address-service"
-        return restTemplate.exchange(baseUrl, HttpMethod.GET,  HttpEntity<Any>(headers), String::class.java)
-    }
+//    fun foo(): ResponseEntity<String> {
+//        val headers = HttpHeaders()
+//        headers["Accept"] = MediaType.APPLICATION_JSON_VALUE
+//
+//        val baseUrl = "http://address-service"
+//        return restTemplate.exchange(baseUrl, HttpMethod.GET,  HttpEntity<Any>(headers), String::class.java)
+//    }
 }
-
-
-
 
 
 //
@@ -77,8 +85,6 @@ class AddressService(private val restTemplate: RestTemplate) {
 //            }
 //    }
 //}
-
-
 
 
 //@Service

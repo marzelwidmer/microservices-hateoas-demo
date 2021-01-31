@@ -6,37 +6,14 @@ spring:
           enabled: false
           lower-case-service-id: true
           url-expression: "uri"
-      # avoid sending forwarded/x-forwarded headers from api-gateway, as they overwrite forwarded headers from nevis or loadbalancer
-#      forwarded:
-#        enabled: true
-#      x-forwarded:
-#        enabled: true
-#        prefix-enabled: true # this header modifies the uri of the request within the called service
-#        prefix-append: false
-#        proto-enabled: false
-#        proto-append: false
-#        port-enabled: false
-#        port-append: false
-#        host-enabled: false
-#        host-append: false
-#        for-enabled: false
-#        for-append: false
+
+      forwarded.enabled: true
+      x-forwarded.enabled: true
+      x-forwarded.forEnabled: true
+      x-forwarded.protoEnabled: true
 
       routes:
-        - id: add_request_header_route
-          uri: https://httpbin.org
-          predicates:
-            - Path=/get/**
-          filters:
-            - AddRequestHeader=My-Header-Good,Good
-            - AddRequestHeader=My-Header-Remove,Remove
-            - AddRequestParameter=var, good
-            - AddRequestParameter=var2, remove
-            - MapRequestHeader=My-Header-Good, My-Header-Bad
-            - MapRequestHeader=My-Header-Set, My-Header-Bad
-            - SetRequestHeader=My-Header-Set, Set
-            - RemoveRequestHeader=My-Header-Remove
-            - RemoveRequestParameter=var2
+
 
         - id: customer-service
           uri: lb://customer-service
@@ -51,5 +28,20 @@ spring:
             - Path=/address/**
           filters:
             - StripPrefix=1
+
+        - id: add_request_header_route
+          uri: https://httpbin.org
+          predicates:
+            - Path=/get/**
+          filters:
+            - AddRequestHeader=My-Header-Good,Good
+            - AddRequestHeader=My-Header-Remove,Remove
+            - AddRequestParameter=var, good
+            - AddRequestParameter=var2, remove
+            - MapRequestHeader=My-Header-Good, My-Header-Bad
+            - MapRequestHeader=My-Header-Set, My-Header-Bad
+            - SetRequestHeader=My-Header-Set, Set
+            - RemoveRequestHeader=My-Header-Remove
+            - RemoveRequestParameter=var2
 
 
