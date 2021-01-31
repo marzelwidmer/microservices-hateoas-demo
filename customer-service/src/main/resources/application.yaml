@@ -14,7 +14,24 @@ logging:
   pattern:
     console: "%clr(%d{yyyy-MM-dd E HH:mm:ss.SSS}){blue} - %clr(${spring.application.name:-}){green} - %clr(%-40.40logger{0}){magenta} - %clr(%m){green}%n"
 
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      enabled: true
+    restart:
+      enabled: true
+    info:
+      enabled: true
+  info:
+    git:
+      mode: full
+
 server:
+  forward-headers-strategy: framework
   port: 9000
 
 eureka:

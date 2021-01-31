@@ -7,7 +7,24 @@ spring:
   application:
     name:  address-service
 
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      enabled: true
+    restart:
+      enabled: true
+    info:
+      enabled: true
+  info:
+    git:
+      mode: full
+
 server:
+  forward-headers-strategy: framework
   port: 9001
 
 
