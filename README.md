@@ -1,56 +1,48 @@
 # Docker Compose
+## Build Package
 ```bash
 ./build.sh
+``` 
+## Docker-Compose - Build Docker And Start 
+```bash
 docker-compose build
 docker-compose up
 ```
 
-```bash
-for i in {1..100}; do; http http://localhost/customer forwarded:for='docker.me;host=docker.me' ; done
-```
-
-```bash
-http http://localhost/customer forwarded:for='docker.me;host=docker.me' --print=HhBb
-
-http http://localhost/customer/addresses forwarded:for='docker.me;host=docker.me' --print=HhBb
-
-```
-
-
-
-
-
-
-
-
-# Build
+# Build with Buildpacks
 ```bash
 ./pack-images.sh
-```
-
-# Start
+``` 
+## Docker-Compose - Start
 ```bash
 docker-compose up
 ```
 
-# Test 
-Open Browser [http://localhost/registry](http://localhost/registry)
+# Test Applications
+## Docker Setup
+```bash
+for i in {1..100}; do; http http://docker/myapp/services/customer forwarded:for='docker;host=docker' ; done
+```
 
 ```bash
-http localhost/get --print=HhBb
-http localhost/customer --print=HhBb
+http http://docker/myapp/services/customer/customers forwarded:for='docker.me;host=docker.me' --print=HhBb
+http http://docker/myapp/services/customer forwarded:for='docker;host=docker' --print=HhBb
+http http://docker/myapp/services/customer/addresses forwarded:for='docker;host=docker' --print=HhBb
+
 ```
+
+
 ## POST customer 
 
 ```bash
 echo '{
   "firstName": "Foo",
   "lastName": "Bar"
-}' | http -v post http://localhost/customer/customers
+}' | http -v post http://docker/myapp/services/customer/customers
 ```
 
 ## Check H2 Database
-[http://localhost/customer/h2-console/](http://localhost/customer/h2-console/)
+[http://docker/myapp/services/customer/h2-console/](http://docker/myapp/services/customer/h2-console/)
 This is allowed because of the following configuration.
 ```yaml
   h2:
@@ -60,22 +52,19 @@ This is allowed because of the following configuration.
 ```
 ## Call Customer API
 ```bash
-http localhost/customer/customers --print=HhBb
-
-GET /customer/customers HTTP/1.1
+http http://docker/myapp/services/customer/customers --print=HhBb
 Accept: */*
 Accept-Encoding: gzip, deflate
 Connection: keep-alive
-Host: localhost
+Host: docker
 User-Agent: HTTPie/2.3.0
 
 
 
 HTTP/1.1 200 OK
 Content-Type: application/hal+json
-Date: Sun, 24 Jan 2021 16:23:23 GMT
+Date: Sun, 31 Jan 2021 15:37:47 GMT
 transfer-encoding: chunked
-
 {
     "_embedded": {
         "customers": [
@@ -95,48 +84,7 @@ transfer-encoding: chunked
 ```
 
 
-
-
-# Gateway
+## Standalone Setup
 ```bash
-gradle gateway-service:bootRun
-
-http localhost:8080/get --print=HhBb
-
-
-HTTP/1.1 200 OK
-Access-Control-Allow-Credentials: true
-Access-Control-Allow-Origin: *
-Content-Length: 496
-Content-Type: application/json
-Date: Sat, 23 Jan 2021 18:13:11 GMT
-Server: gunicorn/19.9.0
-
-{
-    "args": {},
-    "headers": {
-        "Accept": "*/*",
-        "Accept-Encoding": "gzip, deflate",
-        "Content-Length": "0",
-        "Forwarded": "proto=http;host=\"localhost:8080\";for=\"0:0:0:0:0:0:0:1:54335\"",
-        "Hello": "World",
-        "Host": "httpbin.org",
-        "User-Agent": "HTTPie/2.3.0",
-        "X-Amzn-Trace-Id": "Root=1-600c6737-6f620a7e436615ba044eb4dc",
-        "X-Forwarded-Host": "localhost:8080"
-    },
-    "origin": "0:0:0:0:0:0:0:1, 188.62.60.127",
-    "url": "http://localhost:8080/get"
-}
-
-```
-# Registry
-```bash
-gradle registry-service:bootRun
-```
-
-
-# Customer
-```bash
-gradle customer-service:bootRun
+http http://localhost:8080/myapp/services/customer/customers forwarded:for='docker;host=docker' --print=HhBb
 ```

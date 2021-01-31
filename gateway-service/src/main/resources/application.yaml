@@ -1,13 +1,71 @@
 spring:
-  profiles:
-    active: default
-    include:
-      - common
-      - gateway
-
   application:
     name:  gateway-service
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: false
+          lower-case-service-id: true
+          url-expression: "uri"
+      # avoid sending forwarded/x-forwarded headers from api-gateway, as they overwrite forwarded headers from revers-proxy or loadbalancer
+      forwarded:
+        enabled: false
+      x-forwarded:
+        enabled: true
+        prefix-enabled: true # this header modifies the uri of the request within the called service
+        prefix-append: false
+        proto-enabled: false
+        proto-append: false
+        port-enabled: false
+        port-append: false
+        host-enabled: false
+        host-append: false
+        for-enabled: false
+        for-append: false
 
+      routes:
+        - id: customer-service
+          predicates:
+            - Path=/myapp/services/customer/**
+          filters:
+            - StripPrefix=3
+          uri: http://localhost:9000
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      enabled: true
+    restart:
+      enabled: true
+    info:
+      enabled: true
+  info:
+    git:
+      mode: full
+
+logging:
+  level:
+    root: debug
+
+
+
+
+
+#spring:
+#  profiles:
+#    active: default
+#    include:
+#      - common
+#      - gateway
+#
+#  application:
+#    name:  gateway-service
+#
 server:
   port: 8080
 
@@ -29,3 +87,13 @@ spring:
   config:
     activate:
       on-profile: docker
+
+  cloud:
+    gateway:
+      routes:
+        - id: customer-service
+          predicates:
+            - Path=/myapp/services/customer/**
+          filters:
+            - StripPrefix=3
+          uri: lb://customer-service

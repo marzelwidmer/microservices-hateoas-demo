@@ -1,0 +1,23 @@
+spring:
+  application.name: gateway-service
+  cloud:
+    kubernetes:
+      reload:
+        enabled: false
+
+      discovery:
+        enabled: true
+      ribbon:
+        enabled: true
+        mode: service
+
+---
+spring:
+  profiles: standalone
+
+  cloud:
+    kubernetes:
+      config:
+        enabled: false
+      reload:
+        enabled: false

@@ -1,5 +1,5 @@
 ###
-POST http://localhost/customer/customers
+POST http://docker/myapp/services/customer/customers
 Content-Type: application/json
 
 {

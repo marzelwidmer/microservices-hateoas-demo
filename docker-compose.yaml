@@ -5,7 +5,8 @@ services:
     image: gateway-service
     build: gateway-service
     container_name: gateway-service
-    mem_limit: 350m
+# TODO problem with BuildPacks
+#    mem_limit: 350m
     environment:
       - SPRING_PROFILES_ACTIVE=docker
     ports:
@@ -21,7 +22,8 @@ services:
     image: customer-service
     build: customer-service
     container_name: customer-service
-    mem_limit: 350m
+# TODO problem with BuildPacks
+#    mem_limit: 350m
     environment:
       - SPRING_PROFILES_ACTIVE=docker
     networks:
@@ -33,7 +35,8 @@ services:
     image: address-service
     build: address-service
     container_name: address-service
-    mem_limit: 350m
+# TODO problem with BuildPacks
+#    mem_limit: 350m
     environment:
       - SPRING_PROFILES_ACTIVE=docker
     networks:
@@ -44,7 +47,8 @@ services:
   eureka-server:
     build: eureka-service
     container_name: eureka-server
-    mem_limit: 350m
+# TODO problem with BuildPacks
+#    mem_limit: 350m
     ports:
       - "8761:8761"
     expose:

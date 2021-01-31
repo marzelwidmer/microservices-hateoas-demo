@@ -15,7 +15,7 @@ logging:
     console: "%clr(%d{yyyy-MM-dd E HH:mm:ss.SSS}){blue} - %clr(${spring.application.name:-}){green} - %clr(%-40.40logger{0}){magenta} - %clr(%m){green}%n"
 
 server:
-  port: 8000
+  port: 9000
 
 eureka:
   client:
