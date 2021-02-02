@@ -32,8 +32,12 @@ spring:
           filters:
             - StripPrefix=3
           uri: http://localhost:9000
+          metadata:
+            relName: customer
 
         - id: address-service
+          metadata:
+            relName: address
           predicates:
             - Path=/myapp/services/address/**
           filters:
@@ -98,3 +102,12 @@ spring:
           filters:
             - StripPrefix=3
           uri: lb://address-service
+
+---
+spring:
+  config:
+    activate:
+      on-profile: standalone
+eureka:
+  client:
+    enabled: false
