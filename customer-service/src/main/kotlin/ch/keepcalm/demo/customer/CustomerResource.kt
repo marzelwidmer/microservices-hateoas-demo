@@ -8,11 +8,12 @@ import org.springframework.web.bind.annotation.*
 import org.springframework.http.HttpEntity
 import org.springframework.http.ResponseEntity
 import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder
+import javax.ws.rs.Produces
 
 @RestController
 class CustomerResource(private val service: CustomerService) {
 
-    @GetMapping(value = ["/customers/{id}"])
+    @GetMapping(value = ["/customers/{id}"], produces = [MediaTypes.HAL_JSON_VALUE])
     fun one(@PathVariable id: String): EntityModel<Customer> {
         val selfLink: Link = linkTo(methodOn(CustomerResource::class.java).one(id)).withSelfRel()
         val create: Affordance = afford<CustomerResource> { methodOn(CustomerResource::class.java).add(customer = Customer(firstName = "", lastName = "")) }
@@ -23,10 +24,11 @@ class CustomerResource(private val service: CustomerService) {
     }
 
 
-    @GetMapping(value = ["/customers"])
-    fun all(): CollectionModel<Customer> {
+    @GetMapping(value = ["/customers"], produces = [MediaTypes.HAL_JSON_VALUE])
+    fun all(): ResponseEntity<CollectionModel<Customer>> {
         val selfLink: Link = linkTo(methodOn(CustomerResource::class.java).all()).withSelfRel()
-        return CollectionModel.of(service.findCustomers(), selfLink)
+
+        return ResponseEntity.ok(CollectionModel.of(service.findCustomers(), selfLink)) //CollectionModel.of(service.findCustomers(), selfLink)
     }
 
 
