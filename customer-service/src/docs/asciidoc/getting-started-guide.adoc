@@ -71,7 +71,7 @@ body(
 ]
 ----
 
-== Run the  Producer Contracts
+== Run the Producer Contracts
 [source,bash]
 ----
 $ gradle generateContractTests contractTest
