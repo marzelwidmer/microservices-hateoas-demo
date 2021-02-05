@@ -1,6 +1,5 @@
 package contracts
 
-
 import org.springframework.cloud.contract.spec.Contract
 
 Contract.make {
@@ -22,7 +21,12 @@ Contract.make {
 												consumer("http://${fromRequest().header('Host')}"),
 												producer("http://localhost:8080"))
 								],
-								"customer": [
+								"api-docs"     : [
+										"href": value(
+												consumer("http://${fromRequest().header('Host')}/docs/api-guide.html"),
+												producer("http://localhost:8080/docs/api-guide.html"))
+								],
+								 "customer": [
 										"href": value(
 												consumer("http://${fromRequest().header('Host')}/customers/{id}"),
 												producer("http://localhost:8080/customers/{id}")),

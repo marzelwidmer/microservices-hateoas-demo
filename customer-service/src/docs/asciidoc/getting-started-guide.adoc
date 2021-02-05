@@ -1,0 +1,113 @@
+= RESTful Customer Getting Started Guide
+Marcel Widmer;
+:doctype: book
+:icons: font
+:source-highlighter: highlightjs
+:toc: left
+:toclevels: 4
+:sectlinks:
+
+[[introduction]]
+= Introduction
+
+RESTful Customer is a RESTful web service for creating and storing customer. It uses hypermedia
+to describe the relationships between resources and to allow navigation between them.
+
+
+[[getting_started_running_the_service]]
+== Running the service
+RESTful Customer is written using https://projects.spring.io/spring-boot[Spring Boot] which
+makes it easy to get it up and running so that you can start exploring the REST API.
+
+The first step is to clone the Git repository:
+
+[source,bash]
+----
+$ git clone https://github.com/marzelwidmer/microservices-hateoas-demo.git
+----
+
+Once the clone is complete, you're ready to get the service up and running:
+
+[source,bash]
+----
+$ cd customer-service/
+$ ./gradlew build
+$ java -jar build/libs/*0.jar --spring.profiles.active=standalone
+----
+
+You can check that the service is up and running by executing a simple request using
+cURL:
+
+include::{snippets}/ContractVerifierTest_validate_shouldReturnIndexResource()/curl-request.adoc[]
+include::{snippets}/ContractVerifierTest_validate_shouldReturnIndexResource()/httpie-request.adoc[]
+
+
+This request should yield the following response:
+
+include::{snippets}/ContractVerifierTest_validate_shouldReturnIndexResource()/http-response.adoc[]
+
+Note the `_links` in the JSON response. They are key to navigating the API.
+
+
+[[working-with-contracts]]
+= Work with Contracts
+
+Check also the
+https://docs.spring.io/spring-cloud-contract/docs/3.0.0-SNAPSHOT/reference/htmlsingle[Spring Cloud Contract] documentation.
+
+== Update Producer Contracts
+Let imagine we have a new requirement to add a new relation `api-docs`.
+
+[source,groovy]
+----
+body(
+[
+"_links": [
+        "api-docs"     : [
+                "href": value(
+                        consumer("http://${fromRequest().header('Host')}/docs/api-guide.html"),
+                        producer("http://localhost:8080/docs/api-guide.html"))
+        ]
+]
+----
+
+== Run the  Producer Contracts
+[source,bash]
+----
+$ gradle generateContractTests contractTest
+
+* What went wrong:
+Execution failed for task ':contractTest'.
+> There were failing tests. See the report at: file:///microservices-hateoas-demo/customer-service/build/reports/tests/contractTest/index.html
+
+----
+
+Open the `index.html` then you will see something like this, because you change contracts of the index resource.
+----
+java.lang.RuntimeException: com.jayway.jsonpath.PathNotFoundException: Missing property in path $['_links']['api-docs']
+	at com.toomuchcoding.jsonassert.JsonAsserter.parseJsonPathAsArray(JsonAsserter.java:262)
+----
+Now you can go a head and implement the missing part on the `index resource`
+
+[source,kotlin]
+----
+  val API_DOCS_REL = "api-docs"
+
+    @GetMapping
+    fun index(): EntityModel<Unit> {
+        val selfLink: Link = linkTo(methodOn(IndexResource::class.java).index()).withSelfRel()
+        return EntityModel.of(Unit, selfLink).apply {
+            add(Link.of("${BasicLinkBuilder.linkToCurrentMapping()}/docs/api-guide.html").withRel(API_DOCS_REL))
+----
+
+[source,bash]
+----
+$ gradle generateContractTests contractTest
+
+BUILD SUCCESSFUL in 27s
+----
+
+
+
+
+

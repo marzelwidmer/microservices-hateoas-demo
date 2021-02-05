@@ -46,3 +46,12 @@ spring:
   config:
     activate:
       on-profile: docker
+
+---
+spring:
+  config:
+    activate:
+      on-profile: standalone
+eureka:
+  client:
+    enabled: false

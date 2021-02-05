@@ -124,7 +124,7 @@ publishing {
 
 tasks {
     bootJar {
-        from("build/asciidoc/html5") {
+        from("$buildDir/asciidoc/html5") {
             into("static/docs")
         }
     }

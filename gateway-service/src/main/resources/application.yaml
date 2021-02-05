@@ -95,6 +95,8 @@ spring:
           filters:
             - StripPrefix=3
           uri: lb://customer-service
+          metadata:
+            relName: customer
 
         - id: address-service
           predicates:
@@ -102,6 +104,8 @@ spring:
           filters:
             - StripPrefix=3
           uri: lb://address-service
+          metadata:
+            relName: address
 
 ---
 spring:
