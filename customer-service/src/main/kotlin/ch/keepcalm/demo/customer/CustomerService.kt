@@ -1,44 +1,15 @@
 package ch.keepcalm.demo.customer
 
+import ch.keepcalm.demo.customer.secureByDesignModel.Customer
 import org.springframework.stereotype.Service
 
 @Service
 class CustomerService(private val repository: CustomerRepository) {
 
-    fun findCustomerById(id: String): Customer? {
-        return repository.findById(id).orElse(null)
-    }
+    fun findCustomerById(id: String) = repository.findById(id).orElse(null).toDomainObject()
 
-    fun findCustomers() : List<Customer> {
-        return repository.findCustomers()
-    }
+    fun findCustomers() = repository.findCustomers().map { it.toDomainObject() }
 
-    fun post(customer: Customer) {
-        repository.save(customer)
-    }
+    fun post(customer: Customer) = repository.save(CustomerEntity(firstName = customer.firstName.toString(), lastName = customer.lastName.toString()))
+
 }
-//@Service
-//class FooService(private val discoveryClient: EurekaClient, private val restTemplate: RestTemplate) {
-//
-//    fun apiEndpoint() = discoveryClient.getNextServerFromEureka("address", false).homePageUrl
-//
-//    fun addresses(): ResponseEntity<EntityModel<String>> {
-//        val url = apiEndpoint()
-//        println(url)
-//
-//        val addressesLink = traverseToInternalApiAuftragService().follow("addresses").asLink()
-//        return restTemplate.exchange(
-//            addressesLink.expand().href,
-//            HttpMethod.GET,
-//            null,
-//            TypeReferences.EntityModelType<String>()
-//        )
-//    }
-//
-//    internal fun traverseToInternalApiAuftragService(): Traverson {
-//        return Traverson(
-//            URI.create("http://localhost:8081"),
-//            MediaTypes.HAL_JSON
-//        ).setRestOperations(restTemplate)
-//    }
-//}

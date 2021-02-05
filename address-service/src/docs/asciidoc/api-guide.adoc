@@ -1,4 +1,4 @@
-= RESTful Customer API Guide
+= RESTful Address API Guide
 Marcel Widmer
 :doctype: book
 :icons: font
@@ -64,7 +64,7 @@ use of HTTP status codes.
 [[overview_hypermedia]]
 == Hypermedia
 
-RESTful Customer uses hypermedia and resources include links to other resources in their
+RESTful Address uses hypermedia and resources include links to other resources in their
 responses. Responses are in https://github.com/mikekelly/hal_specification[Hypertext
 Application Language (HAL)] format. Links can be found beneath the `_links` key. Users of
 the API should not create URIs themselves, instead they should use the above-described

@@ -53,8 +53,8 @@ spring:
     activate:
       on-profile: docker
 
-api:
-  address: http://address-service
+app:
+  address-service: http://address-service
 
 
 ---

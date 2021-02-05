@@ -1,6 +1,6 @@
 package ch.keepcalm.demo.base
 
-import ch.keepcalm.demo.CustomerApplication
+import ch.keepcalm.demo.AddressApplication
 import io.restassured.module.mockmvc.RestAssuredMockMvc
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.TestInfo
@@ -18,7 +18,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders
 import org.springframework.web.context.WebApplicationContext
 
 @ExtendWith(RestDocumentationExtension::class, SpringExtension::class)
-@SpringBootTest(classes = [CustomerApplication::class])
+@SpringBootTest(classes = [AddressApplication::class])
 @AutoConfigureRestDocs(outputDir = "build/generated-snippets")
 class BaseClass {
 

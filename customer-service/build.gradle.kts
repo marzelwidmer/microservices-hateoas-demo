@@ -29,6 +29,9 @@ fun Project.envConfig() = object : kotlin.properties.ReadOnlyProperty<Any?, Stri
 val version: String by extra
 val group: String by extra
 val springCloudVersion: String by extra
+val kotlinFaker: String by extra
+val halBrowser: String by extra
+val evoInflector: String by extra
 
 // import Spring Cloud  BOM
 dependencyManagement {
@@ -72,13 +75,13 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-actuator")
     implementation("org.springframework.boot:spring-boot-starter-hateoas")
     implementation("org.springframework.boot:spring-boot-starter-web")
-    implementation("org.atteo:evo-inflector:1.2.2")
+    implementation("org.atteo:evo-inflector:$evoInflector")
 
     implementation("org.springframework.boot:spring-boot-starter-data-jdbc")
     runtimeOnly("com.h2database:h2")
 
     //	This will also create index root api - http://docker/myapp/services/customer/browser/index.html#http://docker/myapp/services/customer/
-    implementation("org.springframework.data:spring-data-rest-hal-browser:3.3.6.RELEASE")
+    implementation("org.springframework.data:spring-data-rest-hal-browser:$halBrowser")
     // HAL Explorer http://docker/myapp/services/customer/explorer/index.html#uri=http://docker/myapp/services/customer/ -->
     implementation("org.springframework.data:spring-data-rest-hal-explorer")
 
@@ -93,6 +96,9 @@ dependencies {
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
     implementation("org.springframework.cloud:spring-cloud-starter-netflix-eureka-client")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
+
+    testImplementation("io.github.serpro69", "kotlin-faker", "$kotlinFaker")
+
 
     // Spring Cloud Contracts
     testImplementation("org.springframework.cloud", "spring-cloud-contract-spec-kotlin")
@@ -121,11 +127,10 @@ publishing {
     }
 }
 
-tasks {
-    bootJar {
-        from("$buildDir/asciidoc/html5") {
-            into("static/docs")
-        }
+tasks.bootJar {
+    this.dependsOn(tasks.test)
+    from("$buildDir/asciidoc/html5") {
+        into("static/docs")
     }
 }
 
@@ -150,10 +155,11 @@ tasks.jacocoTestCoverageVerification {
     }
 }
 tasks.test {
+    finalizedBy(tasks.contractTest)
+    finalizedBy(tasks.asciidoctor)
     // report is always generated after tests run
     finalizedBy(tasks.jacocoTestReport)
     finalizedBy(tasks.jacocoTestCoverageVerification)
-    finalizedBy(tasks.asciidoctor)
 }
 
 tasks.withType<Test> {
