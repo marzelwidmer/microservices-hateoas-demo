@@ -1,4 +1,5 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+import org.springframework.boot.gradle.tasks.bundling.BootJar
 
 plugins {
     id("org.springframework.boot") version "2.4.2"
@@ -121,8 +122,13 @@ publishing {
     }
 }
 
-
-
+tasks {
+    bootJar {
+        from("build/asciidoc/html5") {
+            into("static/docs")
+        }
+    }
+}
 
 tasks.jacocoTestReport {
     reports {
@@ -148,6 +154,7 @@ tasks.test {
     // report is always generated after tests run
     finalizedBy(tasks.jacocoTestReport)
     finalizedBy(tasks.jacocoTestCoverageVerification)
+    finalizedBy(tasks.asciidoctor)
 }
 
 tasks.withType<Test> {
