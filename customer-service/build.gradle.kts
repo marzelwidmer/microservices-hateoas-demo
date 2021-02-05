@@ -121,11 +121,10 @@ publishing {
     }
 }
 
-tasks {
-    bootJar {
-        from("$buildDir/asciidoc/html5") {
-            into("static/docs")
-        }
+tasks.bootJar {
+    this.dependsOn(tasks.test)
+    from("$buildDir/asciidoc/html5") {
+        into("static/docs")
     }
 }
 
@@ -150,10 +149,11 @@ tasks.jacocoTestCoverageVerification {
     }
 }
 tasks.test {
+    finalizedBy(tasks.contractTest)
+    finalizedBy(tasks.asciidoctor)
     // report is always generated after tests run
     finalizedBy(tasks.jacocoTestReport)
     finalizedBy(tasks.jacocoTestCoverageVerification)
-    finalizedBy(tasks.asciidoctor)
 }
 
 tasks.withType<Test> {
