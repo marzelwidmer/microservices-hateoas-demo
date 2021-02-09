@@ -29,6 +29,9 @@ fun Project.envConfig() = object : kotlin.properties.ReadOnlyProperty<Any?, Stri
 val version: String by extra
 val group: String by extra
 val springCloudVersion: String by extra
+val kotlinFaker: String by extra
+val halBrowser: String by extra
+val evoInflector: String by extra
 
 // import Spring Cloud  BOM
 dependencyManagement {
@@ -36,6 +39,7 @@ dependencyManagement {
         mavenBom("org.springframework.cloud:spring-cloud-dependencies:$springCloudVersion")
     }
 }
+
 
 contracts {
     testFramework.set(org.springframework.cloud.contract.verifier.config.TestFramework.JUNIT5)
@@ -71,19 +75,30 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-actuator")
     implementation("org.springframework.boot:spring-boot-starter-hateoas")
     implementation("org.springframework.boot:spring-boot-starter-web")
-    implementation("org.atteo:evo-inflector:1.2.2")
+    implementation("org.atteo:evo-inflector:$evoInflector")
 
     implementation("org.springframework.boot:spring-boot-starter-data-jdbc")
     runtimeOnly("com.h2database:h2")
 
-    //	This will also create index root api
-    implementation("org.springframework.data:spring-data-rest-hal-browser:3.3.6.RELEASE")
+    //	This will also create index root api - http://docker/myapp/services/customer/browser/index.html#http://docker/myapp/services/customer/
+    implementation("org.springframework.data:spring-data-rest-hal-browser:$halBrowser")
+    // HAL Explorer http://docker/myapp/services/customer/explorer/index.html#uri=http://docker/myapp/services/customer/ -->
+    implementation("org.springframework.data:spring-data-rest-hal-explorer")
+
+    //	Used for WebClient
+    implementation("org.springframework.boot:spring-boot-starter-webflux")
+
+    // Client-Side Load-Balancing
+    implementation("org.springframework.cloud:spring-cloud-starter-loadbalancer")
 
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
     implementation("org.jetbrains.kotlin:kotlin-reflect")
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
     implementation("org.springframework.cloud:spring-cloud-starter-netflix-eureka-client")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
+
+    testImplementation("io.github.serpro69", "kotlin-faker", "$kotlinFaker")
+
 
     // Spring Cloud Contracts
     testImplementation("org.springframework.cloud", "spring-cloud-contract-spec-kotlin")
@@ -119,7 +134,6 @@ tasks.bootJar {
     }
 }
 
-
 tasks.jacocoTestReport {
     reports {
         xml.isEnabled = true
@@ -151,12 +165,10 @@ tasks.test {
 tasks.withType<Test> {
     useJUnitPlatform()
 }
-
 java {
     sourceCompatibility = JavaVersion.VERSION_11
     targetCompatibility = JavaVersion.VERSION_11
 }
-
 tasks.withType<KotlinCompile> {
     kotlinOptions {
         languageVersion = "1.4"
@@ -165,7 +177,6 @@ tasks.withType<KotlinCompile> {
         freeCompilerArgs = listOf("-Xjsr305=strict")
     }
 }
-
 tasks.withType<Test> {
     useJUnitPlatform()
 }
