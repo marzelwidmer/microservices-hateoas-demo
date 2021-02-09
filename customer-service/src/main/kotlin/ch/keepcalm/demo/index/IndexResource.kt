@@ -13,10 +13,12 @@ import org.springframework.web.bind.annotation.RestController
 @RestController
 class IndexResource() {
 
-    val CUSTOMERS_REL = "customers"
-    val CUSTOMER_REL = "customer"
-    val ADDRESSES_REL = "addresses"
-    val API_DOCS_REL = "api-docs"
+   companion object REL {
+       const val CUSTOMERS_REL = "customers"
+       const val  CUSTOMER_REL = "customer"
+       const val  ADDRESSES_REL = "addresses"
+       const val  API_DOCS_REL = "api-docs"
+   }
 
     @GetMapping
     fun index(): EntityModel<Unit> {

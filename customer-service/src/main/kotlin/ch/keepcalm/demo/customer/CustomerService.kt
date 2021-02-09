@@ -1,15 +1,19 @@
 package ch.keepcalm.demo.customer
 
-import ch.keepcalm.demo.customer.secureByDesignModel.Customer
 import org.springframework.stereotype.Service
 
 @Service
 class CustomerService(private val repository: CustomerRepository) {
 
-    fun findCustomerById(id: String) = repository.findById(id).orElse(null).toDomainObject()
+    fun findCustomerById(id: String): Customer? {
+        return repository.findById(id).orElse(null)
+    }
 
-    fun findCustomers() = repository.findCustomers().map { it.toDomainObject() }
+    fun findCustomers() : List<Customer> {
+        return repository.findCustomers()
+    }
 
-    fun post(customer: Customer) = repository.save(CustomerEntity(firstName = customer.firstName.toString(), lastName = customer.lastName.toString()))
-
+    fun post(customer: Customer) {
+        repository.save(customer)
+    }
 }

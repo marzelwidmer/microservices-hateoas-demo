@@ -1,9 +1,9 @@
 #!/bin/bash
 echo "Build the CustomerService"
-gradle customer-service:clean customer-service:bootJar
+gradle customer-service:clean customer-service:build customer-service:bootJar
 
 echo "Build the AddressService"
-gradle address-service:clean address-service:bootJar
+gradle address-service:clean address-service:build address-service:bootJar
 
 echo "Build the Spring Cloud Gateway"
 gradle gateway-service:clean gateway-service:bootJar
