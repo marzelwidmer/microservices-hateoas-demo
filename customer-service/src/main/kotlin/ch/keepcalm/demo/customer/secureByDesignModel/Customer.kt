@@ -3,7 +3,7 @@ package ch.keepcalm.demo.customer.secureByDesignModel
 import com.fasterxml.jackson.annotation.JsonCreator
 import com.fasterxml.jackson.annotation.JsonValue
 
-data class Customer(val id: String, val firstName: FirstName, val lastName: LastName, val gender: Gender?)
+data class Customer(val id: String?, val firstName: FirstName, val lastName: LastName)
 
 // Domain Primitive
 data class FirstName(val value: String) {
@@ -39,11 +39,4 @@ data class LastName(val value: String) {
 
     @JsonValue
     override fun toString() = value
-}
-
-// Domain Primitive
-data class Gender(@JsonValue val value: Char) {
-    init {
-        require(value.toLowerCase() == 'm' || value.toLowerCase() == 'f' || value.toLowerCase() == 'u') { "gender ist invalid (m|f|u)" }
-    }
 }
