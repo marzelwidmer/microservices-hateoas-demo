@@ -94,6 +94,9 @@ dependencies {
     implementation("org.springframework.cloud:spring-cloud-starter-netflix-eureka-client")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
 
+    testImplementation("io.github.serpro69", "kotlin-faker", "1.6.0")
+
+
     // Spring Cloud Contracts
     testImplementation("org.springframework.cloud", "spring-cloud-contract-spec-kotlin")
     testImplementation("org.springframework.cloud", "spring-cloud-starter-contract-stub-runner")

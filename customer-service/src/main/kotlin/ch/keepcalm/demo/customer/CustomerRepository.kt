@@ -5,9 +5,7 @@ import org.springframework.data.repository.CrudRepository
 import org.springframework.stereotype.Repository
 
 @Repository
-interface CustomerRepository : CrudRepository<Customer, String> {
-
+interface CustomerRepository : CrudRepository<CustomerEntity, String> {
     @Query("select * from customer")
-    fun findCustomers(): List<Customer>
-
+    fun findCustomers(): List<CustomerEntity>
 }
