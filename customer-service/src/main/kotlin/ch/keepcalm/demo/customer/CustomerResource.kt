@@ -20,9 +20,21 @@ class CustomerResource(private val service: CustomerService) {
     @GetMapping(value = ["/customers/{id}"], produces = [MediaTypes.HAL_JSON_VALUE])
     fun one(@PathVariable id: String): EntityModel<Customer> {
         val selfLink: Link = linkTo(methodOn(CustomerResource::class.java).one(id)).withSelfRel()
-        val create: Affordance = afford<CustomerResource> { methodOn(CustomerResource::class.java).add(customer = Customer(firstName = FirstName(""), lastName = LastName(""), gender = Gender('u'))) }
+        val create: Affordance =
+            afford<CustomerResource> { methodOn(CustomerResource::class.java).add(customer = Customer(id = "", firstName = FirstName(""), lastName = LastName(""), gender = Gender('u'))) }
         val aggregateRoot: Link = linkTo(methodOn(CustomerResource::class.java).all()).withRel("customers")
-            .andAffordance(WebMvcLinkBuilder.afford(methodOn(CustomerResource::class.java).add(customer = Customer(firstName = FirstName(""), lastName = LastName(""), gender = Gender('u')))))
+            .andAffordance(
+                WebMvcLinkBuilder.afford(
+                    methodOn(CustomerResource::class.java).add(
+                        customer = Customer(
+                            id = "",
+                            firstName = FirstName(""),
+                            lastName = LastName(""),
+                            gender = Gender('u')
+                        )
+                    )
+                )
+            )
 
         return EntityModel.of(service.findCustomerById(id), selfLink.andAffordance(create), aggregateRoot)
     }
