@@ -8,6 +8,17 @@ Content-Type: application/json
   "firstName": "Foo",
   "lastName": "Bar"
 }
+###
+POST http://docker/myapp/services/customer/customers
+Forwarded: for="docker;host=docker"
+Content-Type: application/json
+
+{
+  "firstName": "Fazz",
+  "lastName": "Bazz",
+  "gender" : "m"
+}
+
 ### Address
 POST http://docker/myapp/services/address/addresses
 Forwarded: for="docker;host=docker"

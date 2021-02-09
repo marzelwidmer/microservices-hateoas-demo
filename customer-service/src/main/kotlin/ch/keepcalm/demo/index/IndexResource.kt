@@ -23,7 +23,7 @@ class IndexResource() {
         val selfLink: Link = linkTo(methodOn(IndexResource::class.java).index()).withSelfRel()
         return EntityModel.of(Unit, selfLink).apply {
             add(Link.of("${BasicLinkBuilder.linkToCurrentMapping()}/docs/api-guide.html").withRel(API_DOCS_REL))
-//            add(linkTo(methodOn(CustomerResource::class.java).all()).withRel(CUSTOMERS_REL))
+            add(linkTo(methodOn(CustomerResource::class.java).all()).withRel(CUSTOMERS_REL))
             add(Link.of("${BasicLinkBuilder.linkToCurrentMapping()}/customers/{id}").withRel(CUSTOMER_REL))
             add(linkTo(methodOn(AddressResource::class.java).addresses()).withRel(ADDRESSES_REL))
         }
