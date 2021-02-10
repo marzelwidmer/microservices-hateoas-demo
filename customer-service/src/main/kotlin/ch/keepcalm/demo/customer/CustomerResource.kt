@@ -17,7 +17,7 @@ class CustomerResource(private val service: CustomerService) {
 
     @GetMapping(value = ["/customers/{id}"], produces = [MediaTypes.HAL_JSON_VALUE])
     fun one(@PathVariable id: String): EntityModel<Customer> {
-        val customer = Customer(id= "", firstName = FirstName(""), lastName = LastName(""))
+        val customer = Customer(id = null, firstName = FirstName("firstName"), lastName = LastName("lastName"))
 
         val selfLink: Link = linkTo(methodOn(CustomerResource::class.java).one(id)).withSelfRel()
         val create: Affordance = afford<CustomerResource> { methodOn(CustomerResource::class.java).add(customer = customer) }
@@ -28,10 +28,12 @@ class CustomerResource(private val service: CustomerService) {
     }
 
     @GetMapping(value = ["/customers"], produces = [MediaTypes.HAL_JSON_VALUE])
-    fun all(): ResponseEntity<CollectionModel<Customer>> {
+    fun all(): CollectionModel<EntityModel<Customer>> {
         val selfLink: Link = linkTo(methodOn(CustomerResource::class.java).all()).withSelfRel()
-
-        return ResponseEntity.ok(CollectionModel.of(service.findCustomers(), selfLink)) //CollectionModel.of(service.findCustomers(), selfLink)
+        return  CollectionModel.of(
+             service.findCustomers().map {
+                 EntityModel.of(it, linkTo(methodOn(CustomerResource::class.java).one(it.id.toString())).withSelfRel())
+             }, selfLink)
     }
 
     @PostMapping(value = ["/customers"])

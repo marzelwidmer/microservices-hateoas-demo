@@ -2,8 +2,9 @@ package ch.keepcalm.demo.customer.secureByDesignModel
 
 import com.fasterxml.jackson.annotation.JsonCreator
 import com.fasterxml.jackson.annotation.JsonValue
+import java.util.*
 
-data class Customer(val id: String?, val firstName: FirstName, val lastName: LastName)
+data class Customer(val id: String? = UUID.randomUUID().toString(), val firstName: FirstName, val lastName: LastName)
 
 // Domain Primitive
 data class FirstName(val value: String) {
