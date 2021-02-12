@@ -7,7 +7,7 @@ import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.ValueSource
 import java.util.*
 
-class CustomerTests {
+class CustomerResourceTests {
 
 //    @ParameterizedTest(name = "{index} negative test gender {0}")
 //    @ValueSource(
