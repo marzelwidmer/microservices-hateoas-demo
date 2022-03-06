@@ -46,12 +46,16 @@ eureka:
 ---
 server.port: 80
 
-eureka.client.serviceUrl.defaultZone: http://eureka-server:8761/eureka/
-
 spring:
   config:
     activate:
       on-profile: docker
+
+eureka:
+  client:
+    register-with-eureka: true
+    serviceUrl:
+      defaultZone: http://eureka-service:8761/eureka/
 
 app:
   address-service: http://address-service

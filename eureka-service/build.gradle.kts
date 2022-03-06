@@ -1,10 +1,10 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-	id("org.springframework.boot") version "2.4.2"
+	id("org.springframework.boot") version "2.6.4"
 	id("io.spring.dependency-management") version "1.0.11.RELEASE"
-	kotlin("jvm") version "1.4.21"
-	kotlin("plugin.spring") version "1.4.21"
+	kotlin("jvm") version "1.6.10"
+	kotlin("plugin.spring") version "1.6.10"
 }
 
 group = "ch.keepcalm"
@@ -16,7 +16,7 @@ repositories {
 	maven { url = uri("https://repo.spring.io/milestone") }
 }
 
-extra["springCloudVersion"] = "2020.0.0"
+extra["springCloudVersion"] = "2021.0.1"
 
 springBoot {
 	buildInfo()

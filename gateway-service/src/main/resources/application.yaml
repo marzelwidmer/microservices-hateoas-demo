@@ -79,7 +79,6 @@ eureka:
 ---
 server.port: 80
 
-eureka.client.serviceUrl.defaultZone: http://eureka-server:8761/eureka/
 
 spring:
   config:
@@ -106,6 +105,11 @@ spring:
           uri: lb://address-service
           metadata:
             relName: address
+eureka:
+  client:
+    register-with-eureka: true
+    serviceUrl:
+      defaultZone: http://eureka-service:8761/eureka/
 
 ---
 spring:

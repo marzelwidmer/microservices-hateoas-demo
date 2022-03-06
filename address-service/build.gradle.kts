@@ -1,13 +1,13 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-    id("org.springframework.boot") version "2.4.2"
+    id("org.springframework.boot") version "2.6.4"
     id("io.spring.dependency-management") version "1.0.11.RELEASE"
-    kotlin("jvm") version "1.4.21"
-    kotlin("plugin.spring") version "1.4.21"
-    kotlin("kapt") version "1.4.21"
-    id("org.springframework.cloud.contract") version "3.0.0"
-    id("org.asciidoctor.convert") version "1.5.9.2"
+    kotlin("jvm") version "1.6.10"
+    kotlin("plugin.spring") version "1.6.10"
+    kotlin("kapt") version "1.6.10"
+    id("org.springframework.cloud.contract") version "3.1.1"
+    id("org.asciidoctor.convert") version "2.4.0"
 
     java
     jacoco
@@ -156,7 +156,7 @@ tasks.jacocoTestCoverageVerification {
 }
 tasks.test {
     finalizedBy(tasks.contractTest)
-    finalizedBy(tasks.asciidoctor)
+//    finalizedBy(tasks.asciidoctor)
     // report is always generated after tests run
     finalizedBy(tasks.jacocoTestReport)
     finalizedBy(tasks.jacocoTestCoverageVerification)
@@ -171,8 +171,8 @@ java {
 }
 tasks.withType<KotlinCompile> {
     kotlinOptions {
-        languageVersion = "1.4"
-        apiVersion = "1.4"
+        languageVersion = "1.6"
+        apiVersion = "1.6"
         jvmTarget = "11"
         freeCompilerArgs = listOf("-Xjsr305=strict")
     }
