@@ -32,7 +32,7 @@ management:
 
 server:
   forward-headers-strategy: framework
-  port: 9000
+  port: 8080
 
 eureka:
   client:

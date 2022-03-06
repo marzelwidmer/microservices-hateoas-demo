@@ -7,7 +7,7 @@ plugins {
     kotlin("plugin.spring") version "1.6.10"
     kotlin("kapt") version "1.6.10"
     id("org.springframework.cloud.contract") version "3.1.1"
-    id("org.asciidoctor.convert") version "2.4.0"
+    id("org.asciidoctor.jvm.convert") version "3.3.2"
 
     java
     jacoco
@@ -106,8 +106,6 @@ dependencies {
     testImplementation("org.springframework.cloud", "spring-cloud-starter-contract-verifier")
     testImplementation("org.springframework.restdocs", "spring-restdocs-mockmvc")
 
-    asciidoctor("org.springframework.restdocs:spring-restdocs-asciidoctor")
-
 }
 
 publishing {
@@ -129,7 +127,7 @@ publishing {
 
 tasks.bootJar {
     this.dependsOn(tasks.test)
-    from("$buildDir/asciidoc/html5") {
+    from("$buildDir/docs/asciidoc") {
         into("static/docs")
     }
 }
@@ -156,7 +154,7 @@ tasks.jacocoTestCoverageVerification {
 }
 tasks.test {
     finalizedBy(tasks.contractTest)
-//    finalizedBy(tasks.asciidoctor)
+    finalizedBy(tasks.asciidoctor)
     // report is always generated after tests run
     finalizedBy(tasks.jacocoTestReport)
     finalizedBy(tasks.jacocoTestCoverageVerification)

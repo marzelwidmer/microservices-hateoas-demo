@@ -1,4 +1,4 @@
-= RESTful Customer API Guide
+= RESTful API Guide
 Marcel Widmer
 :doctype: book
 :icons: font
