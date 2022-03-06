@@ -1,16 +1,32 @@
-= RESTful API Guide
-Marcel Widmer
-:doctype: book
-:icons: font
-:source-highlighter: highlightjs
+// Settings
+:idprefix:
+:idseparator: -
 :toc: left
-:toclevels: 4
+:icons: font
+//:source-highlighter: prettify
+:source-highlighter: highlightjs
+//:source-highlighter: rouge
+//:source-highlighter: coderay
+:toclevels: 3
+:doctype: book
+:sectanchors:
+:copyright: ©
+:dot: .
+:ellipsis: …
+:hatch: #
+:pilcrow: ¶
+:star: *
+:tilde: ~
+:ul: _
 :sectlinks:
 :operation-curl-request-title: Example request
 :operation-http-response-title: Example response
+:project_id: {project-name}
+:revnumber: {project-version}
+//ifndef::snippets[:snippets: build/generated-snippets]
 
-[[overview]]
-= Overview
+
+= RESTful API Guide
 
 [[overview_http_verbs]]
 == HTTP verbs
@@ -85,5 +101,4 @@ The index provides the entry point into the service.
 A `GET` request is used to access the index
 
 operation::ContractVerifierTest_validate_shouldReturnIndexResource()[snippets='httpie-request,curl-request,response-body,http-response']
-
 

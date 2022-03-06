@@ -1,11 +1,37 @@
-= RESTful Customer Getting Started Guide
-Marcel Widmer;
-:doctype: book
-:icons: font
-:source-highlighter: highlightjs
+// Settings
+:idprefix:
+:idseparator: -
 :toc: left
-:toclevels: 4
+:icons: font
+:source-highlighter: prettify
+//:source-highlighter: highlightjs
+//:source-highlighter: rouge
+//:source-highlighter: coderay
+:toclevels: 3
+:doctype: book
+:sectanchors:
+:copyright: ©
+:dot: .
+:ellipsis: …
+:hatch: #
+:pilcrow: ¶
+:star: *
+:tilde: ~
+:ul: _
 :sectlinks:
+:operation-curl-request-title: Example request
+:operation-http-response-title: Example response
+
+
+:project_id: {project-name}
+:revnumber: {project-version}
+ifndef::imagesdir[:imagesdir: images]
+ifndef::sourcedir[:sourcedir: ../../main/kotlin]
+ifndef::testdir[:testdir: ../../test/kotlin]
+ifndef::snippets[:snippets: build/generated-snippets]
+ifndef::resourcesdir[:resourcesdir: ../resources]
+
+
 
 [[introduction]]
 = Introduction
